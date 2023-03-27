@@ -1,1 +1,5 @@
-
+# Backstage override configuration for your local development environment
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN} # (exported from local environment / generated here: https://github.com/settings/tokens/new)

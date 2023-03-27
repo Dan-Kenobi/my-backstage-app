@@ -1,9 +1,9 @@
 app:
-  title: Scaffolded Backstage App
+  title: Education First Backstage App
   baseUrl: http://localhost:3000
 
 organization:
-  name: My Company
+  name: Education First (Sample)
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -28,8 +28,14 @@ backend:
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
-    client: better-sqlite3
-    connection: ':memory:'
+    # client: better-sqlite3
+    client: pg
+    connection: 
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+    # connection: ':memory:'
   cache:
     store: memory
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
@@ -59,14 +65,22 @@ proxy:
 techdocs:
   builder: 'local' # Alternatives - 'external'
   generator:
-    runIn: 'docker' # Alternatives - 'local'
+    runIn: 'local' # Alternatives - 'docker'
   publisher:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
-
+  environment: development
+  providers:
+    google:
+      development:
+        clientId: ${AUTH_GOOGLE_CLIENT_ID}
+        clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
+    github:
+      development: 
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
